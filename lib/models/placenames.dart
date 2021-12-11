@@ -102,11 +102,9 @@ Map<String, dynamic> _placenamesToJson(placenames instance) => <String, dynamic>
       'Reaction': _commentList(instance.Reaction),
       'Post': _commentList(instance.Post),
     };
-
 List<Map<String, dynamic>>? _commentList(List<Comments>? comments) {
   if (comments == null) {
-    return null;
-  }
+    return null;}
   final commentsMap = <Map<String, dynamic>>[];
   comments.forEach((comment) {
     commentsMap.add(comment.toJson());

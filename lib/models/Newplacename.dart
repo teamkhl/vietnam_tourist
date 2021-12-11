@@ -10,11 +10,9 @@ class Newplacenames{
  accountID accountId;
  bool beBrowsed;
 String? referenceId;
-
 List<ImagesOfNewPlaceNames> ImagesOfNewPlaceNames;
 Newplacenames(
-   this.name,
-   {
+   this.name, {
     this.longitude,
    this.latitude,
    this.description,

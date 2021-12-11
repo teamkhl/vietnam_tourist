@@ -23,14 +23,12 @@ factory Comments.fromJson(Map<String,dynamic> json)=> _CommentsFromJson(json);
   @override
   String toString() => 'Comments<$accountID>';
 }
-
 Comments _CommentsFromJson(Map<String, dynamic> json) {
   return Comments(json['accountID'] as String,
       placeNameId: json['placeNameId'] as placenames?,
       content: json['content'] as String,
       date: json['date'] as DateTime,
       );
-         
 }
 Map<String, dynamic> _CommentsToJson(Comments instance) => <String, dynamic>{
       'accountID': instance.accountID,
