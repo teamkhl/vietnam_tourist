@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:vietnam_tourist/landing.dart';
+import 'package:vietnam_tourist/main_screen.dart';
+import 'package:vietnam_tourist/post_detail.dart';
+
+import 'placename_details.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,19 +16,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Vietnam tourist',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Vietnam tourist'),
-        ),
-        body: Center(
-          child: Text(
-            'Hãy luôn nhớ ghi chú cho từng dòng lệnh nhé ! Cố lên',
-          ),
-        ),
-      ),
+      theme: ThemeData(),
+      initialRoute: '/',
+      routes: <String, WidgetBuilder>{
+        '/': (context) => Landing(),
+        '/main_screen': (context) => TabScreen(),
+        '/post_detail': (context) => PostDetail(),
+      },
     );
   }
 }
