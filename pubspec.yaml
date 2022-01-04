@@ -36,6 +36,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   animated_bottom_navigation_bar: ^0.3.2
   carousel_slider: ^4.0.0
+  http: ^0.13.4
+  dio: ^4.0.4
+  provider: ^6.0.2
+  flutter_secure_storage: ^5.0.2
+  flutter_bloc: ^8.0.1
+  geocoding: ^2.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

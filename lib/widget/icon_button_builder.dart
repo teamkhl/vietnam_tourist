@@ -7,13 +7,13 @@ List<Color> _mainColor() {
 
 class IconButtonBuilder extends StatefulWidget {
   final Icon icon;
-  final void Function()? onPreessed;
+  final void Function()? onPressed;
   final double size;
 
   const IconButtonBuilder({
     Key? key,
     required this.icon,
-    this.onPreessed = null,
+    this.onPressed = null,
     this.size = 35,
   });
   @override
@@ -34,10 +34,8 @@ class _IconButtonBuilderState extends State<IconButtonBuilder> {
         ).createShader(bounds);
       },
       child: IconButton(
-        icon: Icon(
-          Icons.mail,
-        ),
-        onPressed: widget.onPreessed ?? () {},
+        icon: widget.icon,
+        onPressed: widget.onPressed ?? () {},
         iconSize: widget.size,
       ),
     );

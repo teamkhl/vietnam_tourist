@@ -41,7 +41,7 @@ class _EditProfileState extends State<EditProfile> {
                 shape: BoxShape.circle,
                 image: new DecorationImage(
                     fit: BoxFit.fill,
-                    image: new NetworkImage("assets/images/rome.jpg")))),
+                    image: new NetworkImage("assets/images/demo.png")))),
 
 // chinh cac text thay doi
         TextFormBuilder(

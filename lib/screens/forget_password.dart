@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:vietnam_tourist/signup.dart';
-import 'widget/button_builder.dart';
-import 'widget/text_form_field_builder.dart';
+import '/screens/signup.dart';
+import '/widget/button_builder.dart';
+import '/widget/text_form_field_builder.dart';
 
 class ForgetPassword extends StatefulWidget {
   @override

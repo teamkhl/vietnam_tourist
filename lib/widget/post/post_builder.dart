@@ -1,6 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:vietnam_tourist/post_detail.dart';
+import 'package:provider/provider.dart';
+
+import '/screens/placename_details.dart';
+import '/models/placename.dart';
+import '/models/post.dart';
+import '/models/user.dart';
+import '/screens/post_detail.dart';
+import '/providers/placename_provider.dart';
+import '/providers/user_provider.dart';
 
 import '../image_buider.dart';
 
@@ -9,7 +17,7 @@ List<Color> _mainColor() {
 }
 
 class PostBuilder extends StatefulWidget {
-  final Map<String, dynamic> post;
+  final Post post;
 
   const PostBuilder({Key? key, required this.post});
   @override
@@ -19,6 +27,34 @@ class PostBuilder extends StatefulWidget {
 class _PostBuilderState extends State<PostBuilder> {
   final EdgeInsets _postPadding =
       EdgeInsets.only(top: 10, bottom: 3, right: 15, left: 15);
+
+  bool _isLoading = false;
+  User fetchedUser = User();
+  Placename fetchedPlacename = Placename();
+  @override
+  void initState() {
+    setState(() {
+      _isLoading = true;
+    });
+    Provider.of<UserProvider>(context, listen: false)
+        .fetchAndSetUser(widget.post.userId.toString())
+        .then((value) {
+      setState(() {
+        fetchedUser = value;
+        _isLoading = false;
+      });
+    });
+    Provider.of<PlacenameProvider>(context, listen: false)
+        .fetchAndSetPlacename(widget.post.placenameId.toString())
+        .then((value) {
+      setState(() {
+        fetchedPlacename = value;
+        _isLoading = false;
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,8 +67,7 @@ class _PostBuilderState extends State<PostBuilder> {
           children: [
             //author's info
             Container(
-              padding:
-                  EdgeInsets.only(right: 10, left: 10, top: 10, bottom: 10),
+              padding: EdgeInsets.only(right: 10, left: 10, top: 10, bottom: 0),
               child: Row(
                 children: [
                   /// avartar
@@ -49,33 +84,55 @@ class _PostBuilderState extends State<PostBuilder> {
                           padding: EdgeInsets.only(bottom: 5),
                           child: Align(
                             alignment: Alignment.centerLeft,
-                            child: Text(
-                              "Nguyen Van Khoa",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.left,
-                            ),
+                            child: _isLoading
+                                ? Text('...')
+                                : Text(
+                                    fetchedUser.name.toString(),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                    textAlign: TextAlign.left,
+                                  ),
                           ),
                         ),
                         Align(
                             alignment: Alignment.centerLeft,
-                            child: Text(
-                              "Can Tho, Viet Nam",
-                              style: TextStyle(
-                                  fontSize: 12, color: Colors.grey.shade600),
-                              textAlign: TextAlign.left,
-                            ))
+                            child: _isLoading
+                                ? Text('...')
+                                : Text(
+                                    widget.post.createdAt.toString(),
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey.shade600),
+                                    textAlign: TextAlign.left,
+                                  ))
                       ],
                     ),
                   )),
                 ],
               ),
             ),
+            Padding(
+                padding: EdgeInsets.only(right: 10, left: 10),
+                child: Divider()),
+//content
+
+            Container(
+              padding: EdgeInsets.only(right: 10, left: 10, bottom: 10),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  widget.post.content.toString(),
+                  style: TextStyle(),
+                  textAlign: TextAlign.left,
+                ),
+              ),
+            ),
             //show img
 
-            if (widget.post['imgCount'] == 1) ...[
+            if (widget.post.content != '') ...[
               // 1 images
               Image.asset("assets/images/demo.png")
-            ] else if (widget.post['imgCount'] == 2) ...[
+            ] else if (widget.post.content == 2) ...[
               if (true) ...[
                 // 2 img h
                 Column(
@@ -102,7 +159,7 @@ class _PostBuilderState extends State<PostBuilder> {
               //               _postPadding.left),
               //   ],
               // ),
-            ] else if (widget.post['imgCount'] == 3) ...[
+            ] else if (widget.post.content == 3) ...[
               // 3 images
               Column(
                 children: [
@@ -129,7 +186,7 @@ class _PostBuilderState extends State<PostBuilder> {
                   )
                 ],
               )
-            ] else if (widget.post['imgCount'] == 4) ...[
+            ] else if (widget.post.content == 4) ...[
               // 4 images
               Column(
                 children: [
@@ -161,7 +218,7 @@ class _PostBuilderState extends State<PostBuilder> {
                   )
                 ],
               )
-            ] else if (widget.post['imgCount'] > 4) ...[
+            ] else if (widget.post.content == 4) ...[
               // >4 images
               Column(
                 children: [
@@ -202,9 +259,7 @@ class _PostBuilderState extends State<PostBuilder> {
                                 color: Colors.black.withOpacity(0.5),
                                 child: Center(
                                   child: Text(
-                                    "+ " +
-                                        (widget.post['imgCount'] - 3)
-                                            .toString(),
+                                    "+ " + (2 - 3).toString(),
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20,
@@ -225,32 +280,80 @@ class _PostBuilderState extends State<PostBuilder> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Column(
-                        children: [
-                          //content
-                          Container(
-                            padding: EdgeInsets.only(bottom: 5),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "Nắng mưa làng...",
-                                style: TextStyle(),
-                                textAlign: TextAlign.left,
-                              ),
-                            ),
-                          ),
-                          //post time
-                          Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "a day ago",
-                                style: TextStyle(
-                                    fontSize: 12, color: Colors.grey.shade600),
-                                textAlign: TextAlign.left,
-                              ))
-                        ],
-                      ),
-                    ),
+                        child: InkWell(
+                            onTap: () {
+                              // Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) =>
+                              //             const PlacenameDetail()));
+                            },
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: 60,
+                                  width: 60,
+                                  decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                      image:
+                                          AssetImage("assets/images/demo.png"),
+                                      fit: BoxFit.cover,
+                                    ),
+                                    color: Colors.blue,
+                                    borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(6.0),
+                                        topLeft: Radius.circular(6.0)),
+                                  ),
+                                  alignment: FractionalOffset(0.0, 1.0),
+                                ),
+                                Container(
+                                    height: 60,
+                                    decoration: BoxDecoration(
+                                      color: Colors.blueAccent,
+                                      //  border: Border.all(width: 4),
+                                      borderRadius: BorderRadius.only(
+                                          bottomRight: Radius.circular(6.0),
+                                          topRight: Radius.circular(6.0)),
+                                    ),
+                                    padding: EdgeInsets.only(
+                                        right: 15, left: 15, top: 10),
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          _isLoading
+                                              ? '...'
+                                              : fetchedPlacename.name
+                                                  .toString(),
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text(
+                                          _isLoading
+                                              ? '...'
+                                              : fetchedPlacename
+                                                      .coordinates['latitude']
+                                                      .toString() +
+                                                  " : " +
+                                                  fetchedPlacename
+                                                      .coordinates['longitude']
+                                                      .toString(),
+                                          style: TextStyle(
+                                            fontSize: 10,
+                                            color: Colors.white,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        )
+                                      ],
+                                    )),
+                              ],
+                            ))),
                     // like button
                     Container(
                       width: 80,

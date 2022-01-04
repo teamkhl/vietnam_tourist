@@ -5,9 +5,9 @@ import 'package:vietnam_tourist/widget/icon_button_builder.dart';
 import 'package:vietnam_tourist/widget/post/post_builder.dart';
 import 'package:vietnam_tourist/widget/text_form_field_builder.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'widget/comment_builder.dart';
-import 'widget/image_buider.dart';
-import 'widget/post/header.dart';
+import '/widget/comment_builder.dart';
+import '/widget/image_buider.dart';
+import '/widget/post/header.dart';
 
 // import 'package:social_media_app/auth/login/login.dart';
 // import 'package:social_media_app/auth/register/register.dart';

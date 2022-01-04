@@ -55,7 +55,7 @@ class _TextFormBuilderState extends State<TextFormBuilder> {
             ),
             child: TextFormField(
               textCapitalization: TextCapitalization.sentences,
-              initialValue: widget.initialValue,
+              // initialValue: widget.initialValue,
               enabled: widget.enabled,
               onChanged: (val) {
                 // error = widget.validateFunction(val);
@@ -66,10 +66,10 @@ class _TextFormBuilderState extends State<TextFormBuilder> {
                 fontSize: 15.0,
               ),
               key: widget.key,
-              controller: widget.controller,
+              controller: widget.controller ?? null,
               obscureText: widget.obscureText,
               keyboardType: widget.textInputType,
-              validator: widget.validateFunction,
+              validator: widget.validateFunction ?? null,
               onSaved: (val) {
                 // error = widget.validateFunction(val);
                 // setState(() {});

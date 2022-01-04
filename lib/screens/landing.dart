@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:vietnam_tourist/login.dart';
-import 'package:vietnam_tourist/signup.dart';
+import '/screens/login.dart';
+import '/screens/signup.dart';
 
-import 'main_screen.dart';
-import 'widget/button_builder.dart';
-import 'widget/text_form_field_builder.dart';
+import '/widget/button_builder.dart';
+import '/widget/text_form_field_builder.dart';
 // import 'package:social_media_app/auth/login/login.dart';
 // import 'package:social_media_app/auth/register/register.dart';
 
