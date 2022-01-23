@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:bloc/bloc.dart';
 import 'package:vietnam_tourist/models/user.dart';
 import 'package:meta/meta.dart';
+import 'package:vietnam_tourist/providers/server_url.dart';
 
 class AuthcubitCubit extends Cubit<AuthcubitState> {
   AuthcubitCubit() : super(AuthcubitInitial());
@@ -19,10 +20,8 @@ class AuthcubitCubit extends Cubit<AuthcubitState> {
     try {
       js = SendAuth(email: email, password: password).toJson();
       log(jsonEncode(js).length.toString());
-      var responce = await http.post(
-          Uri.parse('http://127.0.0.1:8000/api/login'),
-          body: jsonEncode(js),
-          headers: headers);
+      var responce = await http.post(Uri.parse(serverUrl() + 'api/login'),
+          body: jsonEncode(js), headers: headers);
       if (responce.statusCode == 200) {
         //var tt = RespAuth.fromJson(jsonDecode(responce.body));
         // accessToken = tt.token;
@@ -46,8 +45,7 @@ class AuthcubitCubit extends Cubit<AuthcubitState> {
       return;
     } else {
       try {
-        var response = await http.get(
-            Uri.parse('http://127.0.0.1:8000/api/profile'),
+        var response = await http.get(Uri.parse('http://10.0.2.2/api/profile'),
             headers: headers);
         log(response.body);
         final parsed = json.decode(response.body);
@@ -76,10 +74,8 @@ class AuthcubitCubit extends Cubit<AuthcubitState> {
               password: password,
               passwordConfirmation: confirmPassword)
           .toJson();
-      var responce = await http.post(
-          Uri.parse('http://127.0.0.1:8000/api/register'),
-          body: jsonEncode(js),
-          headers: headers);
+      var responce = await http.post(Uri.parse('http://10.0.2.2/api/register'),
+          body: jsonEncode(js), headers: headers);
       if (responce.statusCode == 200) {
         if (jsonDecode(responce.body)['email'] != null) return emitFailed();
         var tt = RespAuth.fromJson(jsonDecode(responce.body));

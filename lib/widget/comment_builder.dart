@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:vietnam_tourist/models/comment.dart';
 
 class CommentBuilder extends StatefulWidget {
+  final Comment comment;
+
   const CommentBuilder({
     Key? key,
+    required this.comment,
   });
   @override
   _CommentBuilderState createState() => _CommentBuilderState();
@@ -28,25 +32,18 @@ class _CommentBuilderState extends State<CommentBuilder> {
               style: TextStyle(fontWeight: FontWeight.w700),
             ),
             subtitle: Text(
-              "a day ago",
+              widget.comment.createdAt.toString(),
               style: TextStyle(fontSize: 12.0),
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
-              "Đẹp qfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffdddddddddddddddddddddddđffffffué!",
+              widget.comment.content.toString(),
               style: TextStyle(fontWeight: FontWeight.w400),
             ),
           ),
-          Row(
-            children: [
-              Container(
-                width: 30,
-              ),
-              CommentBuilder()
-            ],
-          ),
+
           Divider(),
         ]);
   }

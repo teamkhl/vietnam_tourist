@@ -56,7 +56,6 @@ class _ForgetPasswordState extends State<ForgetPassword> {
           ),
           SizedBox(height: 10.0),
           ButtonBuilder(
-            width: 200,
             text: "Send",
           ),
           Row(

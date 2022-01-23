@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:vietnam_tourist/providers/server_url.dart';
 
 import '../models/placename.dart';
 
@@ -14,8 +15,7 @@ class PlacenameProvider with ChangeNotifier {
 
   Future<Placename?> fetchAndSetPlacenames() async {
     try {
-      final response =
-          await http.get(Uri.parse('http://127.0.0.1:8000/api/placename'));
+      final response = await http.get(Uri.parse(serverUrl() + 'api/placename'));
       final extractedData = json.decode(response.body);
 
       if (extractedData == null) {
@@ -35,7 +35,7 @@ class PlacenameProvider with ChangeNotifier {
   Future<Placename> fetchAndSetPlacename(String id) async {
     try {
       final response =
-          await http.get(Uri.parse('http://127.0.0.1:8000/api/placename/$id'));
+          await http.get(Uri.parse(serverUrl() + 'api/placename/$id'));
       final extractedData = json.decode(response.body);
 
       if (extractedData == null) {

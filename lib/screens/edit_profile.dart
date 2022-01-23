@@ -15,14 +15,15 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          foregroundColor: Colors.black,
           title:
               // nut search
               Container(
                   child: Row(
-        children: [
-          Text('Edit Profile'),
-        ],
-      ))),
+            children: [
+              Text('Edit Profile'),
+            ],
+          ))),
       body: Container(
           child: ListView(children: [
         // cai nay cai chu tieu de

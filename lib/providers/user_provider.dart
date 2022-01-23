@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/user.dart';
+import 'server_url.dart';
 
 class UserProvider with ChangeNotifier {
   List<User> _users = [];
@@ -15,8 +16,7 @@ class UserProvider with ChangeNotifier {
 
   Future<User?> fetchAndSetUsers() async {
     try {
-      final response =
-          await http.get(Uri.parse('http://127.0.0.1:8000/api/user'));
+      final response = await http.get(Uri.parse(serverUrl() + 'api/user'));
       final extractedData = json.decode(response.body);
 
       if (extractedData == null) {
@@ -33,8 +33,7 @@ class UserProvider with ChangeNotifier {
 
   Future<User> fetchAndSetUser(String id) async {
     try {
-      final response =
-          await http.get(Uri.parse('http://127.0.0.1:8000/api/user/$id'));
+      final response = await http.get(Uri.parse(serverUrl() + 'api/user/$id'));
       final extractedData = json.decode(response.body);
 
       if (extractedData == null) {

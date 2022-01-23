@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vietnam_tourist/providers/placename_provider.dart';
 import 'package:vietnam_tourist/widget/button_builder.dart';
+import 'package:vietnam_tourist/widget/text_form_field_builder.dart';
 
 class Search extends StatefulWidget {
   @override
@@ -10,6 +11,32 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+        create: (ctx) => PlacenameProvider(),
+        child: Scaffold(
+          appBar: AppBar(
+            foregroundColor: Colors.black,
+            backgroundColor: Colors.grey.shade200,
+            title: TextFormBuilder(hintText: "Enter placename's name..."),
+          ),
+          body: buildSummaryPlacename(),
+        ));
+  }
+}
+
+class buildSummaryPlacename extends StatefulWidget {
+  @override
+  _buildSummaryPlacenameState createState() => _buildSummaryPlacenameState();
+}
+
+class _buildSummaryPlacenameState extends State<buildSummaryPlacename> {
   bool _isLoading = false;
   @override
   void initState() {
@@ -28,17 +55,6 @@ class _SearchState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-        create: (ctx) => PlacenameProvider(),
-        child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'so',
-            home: Scaffold(
-              body: buildSummaryPlacename(),
-            )));
-  }
-
-  buildSummaryPlacename() {
     final placenameData = Provider.of<PlacenameProvider>(context);
     final fetchedPlacenames = placenameData.placenames;
     return ListView.builder(
@@ -60,7 +76,6 @@ class _SearchState extends State<Search> {
                   onTap: () {},
                   child: ButtonBuilder(
                     text: "Share",
-                    width: 80,
                   )),
             ),
             Divider(),

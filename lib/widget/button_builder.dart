@@ -8,13 +8,11 @@ List<Color> _mainColor() {
 class ButtonBuilder extends StatefulWidget {
   final String text;
   final void Function()? onPressed;
-  final double width;
 
   const ButtonBuilder({
     Key? key,
     required this.text,
     this.onPressed,
-    this.width = 130,
   });
   @override
   _ButtonBuilderState createState() => _ButtonBuilderState();
@@ -47,7 +45,7 @@ class _ButtonBuilderState extends State<ButtonBuilder> {
           primary: Colors.transparent,
           onSurface: Colors.transparent,
           shadowColor: Colors.transparent,
-          fixedSize: Size(widget.width, 40),
+          fixedSize: Size.fromHeight(40),
         ),
       ),
     );

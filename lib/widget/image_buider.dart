@@ -28,7 +28,7 @@ class _ImageBuilderState extends State<ImageBuilder> {
         width: widget.width ?? MediaQuery.of(context).size.width / 3,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(widget.href),
+            image: NetworkImage(widget.href),
             fit: BoxFit.cover,
           ),
         ),

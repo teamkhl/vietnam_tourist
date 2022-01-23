@@ -46,6 +46,7 @@ class _NewPlacenameState extends State<NewPlacename> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: Colors.black,
         elevation: 0,
         titleTextStyle: TextStyle(color: Colors.black),
         backgroundColor: Colors.grey.shade200,

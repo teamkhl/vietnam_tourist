@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import 'package:vietnam_tourist/providers/placename_picture_provider.dart';
+import 'package:vietnam_tourist/providers/placename_provider.dart';
+import 'package:vietnam_tourist/providers/post_image_provider.dart';
+import 'package:vietnam_tourist/providers/post_provider.dart';
+import 'package:vietnam_tourist/providers/user_provider.dart';
+import 'package:vietnam_tourist/route_generator.dart';
 import '/screens/landing.dart';
 import '/screens/main_screen.dart';
 import '/screens/post_detail.dart';
+import 'providers/post_comment.dart';
 import 'screens/search.dart';
 import 'services/auth.dart';
 
@@ -17,22 +25,40 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: _authcubitCubit,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (ctx) => PostProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => UserProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => PlacenameProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => PostPictureProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => PlacenamePictureProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => PostCommentProvider(),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        initialRoute: '/main_screen',
-        routes: <String, WidgetBuilder>{
-          '/': (context) => Landing(),
-          '/main_screen': (context) => TabScreen(),
-          '/post_detail': (context) => PostDetail(),
-          '/search': (context) => Search(),
-        },
+        initialRoute: '/',
+        onGenerateRoute: RouteGenerator.generateRoute,
       ),
     );
   }
 }
+
+// BlocProvider.value(
+//       value: _authcubitCubit,
+//       child:

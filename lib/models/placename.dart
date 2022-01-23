@@ -1,16 +1,16 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:dio/dio.dart';
 
-Future<List<Placename>> fetchPlacenames() async {
-  final response =
-      await http.get(Uri.parse('http://127.0.0.1:8000/api/placename'));
+import 'package:vietnam_tourist/providers/server_url.dart';
+
+Future<Placename> fetchPlacename(String id) async {
+  final response = await http.get(Uri.parse(serverUrl() + 'api/placename/$id'));
 
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
 
-    return parsed.map<Placename>((json) => Placename.fromJson(json)).toList();
+    return Placename.fromJson(parsed);
   } else {
     throw Exception('Failed to load album');
   }
@@ -18,7 +18,7 @@ Future<List<Placename>> fetchPlacenames() async {
 
 class Placename {
   int? id;
-  String? name;
+  String? name = "";
   Map<String, double> coordinates = {'latitude': 0.0, 'longitude': 0.0};
   String? description;
   String? specialties;

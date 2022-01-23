@@ -1,26 +1,18 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:vietnam_tourist/models/image.dart';
+import 'package:vietnam_tourist/models/placename.dart';
+import 'package:vietnam_tourist/providers/placename_picture_provider.dart';
+import 'package:vietnam_tourist/providers/server_url.dart';
 import 'package:vietnam_tourist/widget/button_builder.dart';
 import 'package:vietnam_tourist/widget/text_form_field_builder.dart';
 import 'package:vietnam_tourist/widget/comment_builder.dart';
 
 class PlacenameDetail extends StatefulWidget {
-  const PlacenameDetail(
-      {Key? key,
-      required this.image,
-      required this.title,
-      required this.longitude,
-      required this.latitude,
-      required this.description,
-      required this.specialties})
-      : super(key: key);
-  final String image;
-  final String title;
-  final String longitude;
-  final String latitude;
-  final String description;
-  final String specialties;
+  const PlacenameDetail({Key? key, required this.placename}) : super(key: key);
+  final Placename placename;
 
   @override
   _PlacenameDetailState createState() => _PlacenameDetailState();
@@ -38,7 +30,7 @@ class _PlacenameDetailState extends State<PlacenameDetail> {
             textAlign: TextAlign.center,
           ),
           Text(
-            widget.description,
+            widget.placename.description.toString(),
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
             textAlign: TextAlign.left,
           ),
@@ -48,7 +40,7 @@ class _PlacenameDetailState extends State<PlacenameDetail> {
             textAlign: TextAlign.center,
           ),
           Text(
-            widget.specialties,
+            widget.placename.specialties.toString(),
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
             textAlign: TextAlign.left,
           ),
@@ -71,9 +63,9 @@ class _PlacenameDetailState extends State<PlacenameDetail> {
                 size: 16,
                 color: Colors.grey,
               ),
-              Text(widget.latitude + "°N ",
+              Text(widget.placename.coordinates['latitude'].toString(),
                   style: TextStyle(color: Colors.grey, fontSize: 13)),
-              Text(widget.longitude + "°E",
+              Text(widget.placename.coordinates['longitude'].toString(),
                   style: TextStyle(color: Colors.grey, fontSize: 13))
             ],
           ),
@@ -82,10 +74,31 @@ class _PlacenameDetailState extends State<PlacenameDetail> {
     ));
   }
 
+  bool _isLoading = false;
+  List<Picture> fetchedPlacenamePicture = [];
+  @override
+  void initState() {
+    setState(() {
+      _isLoading = true;
+    });
+
+    Provider.of<PlacenamePictureProvider>(context, listen: false)
+        .fetchAndSetPlacenamePictures(widget.placename.id.toString())
+        .then((value) {
+      setState(() {
+        fetchedPlacenamePicture = value;
+        _isLoading = false;
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          actions: [ButtonBuilder(text: 'GO')],
+          foregroundColor: Colors.black,
           elevation: 0,
           titleTextStyle: TextStyle(color: Colors.black),
           backgroundColor: Colors.grey.shade200,
@@ -93,7 +106,7 @@ class _PlacenameDetailState extends State<PlacenameDetail> {
             children: [
               Container(
                 child: Text(
-                  widget.title,
+                  widget.placename.name.toString(),
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   textAlign: TextAlign.center,
                 ),
@@ -116,7 +129,12 @@ class _PlacenameDetailState extends State<PlacenameDetail> {
                           decoration: BoxDecoration(
                             color: Colors.amber,
                             image: DecorationImage(
-                              image: AssetImage("assets/images/demo.png"),
+                              image: NetworkImage(serverUrl() +
+                                  fetchedPlacenamePicture
+                                      .firstWhere((element) => true,
+                                          orElse: () => Picture())
+                                      .path
+                                      .toString()),
                               fit: BoxFit.cover,
                             ),
                           ),

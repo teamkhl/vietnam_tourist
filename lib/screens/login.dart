@@ -138,7 +138,6 @@ class _LoginState extends State<Login> {
                                         email: _emailController.text,
                                         password: _passwordController.text);
                               },
-                              width: 100,
                               text: "LOG IN",
                             ),
                             Row(

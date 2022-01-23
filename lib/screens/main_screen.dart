@@ -2,19 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:vietnam_tourist/providers/placename_picture_provider.dart';
+import 'package:vietnam_tourist/providers/post_image_provider.dart';
 import '/providers/placename_provider.dart';
 import '/providers/user_provider.dart';
-import '/screens/post_detail.dart';
-
 import '/services/auth.dart';
 import '/screens/tabs/feeds.dart';
 import '/screens/tabs/profile.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '/models/user.dart';
 import '/providers/post_provider.dart';
-
 import '/widget/icon_button_builder.dart';
 import 'search.dart';
+import 'tabs/create_post.dart';
+import 'tabs/placenames.dart';
 
 List<Color> _mainColor() {
   return [Colors.blue.shade500, Colors.blue.shade700, Colors.blue.shade800];
@@ -43,7 +44,7 @@ class _TabScreenState extends State<TabScreen> {
     {
       'title': 'Placename',
       'icon': Icons.location_on_sharp,
-      'page': Text(''),
+      'page': Placenames(),
     },
     {
       'title': 'Notication',
@@ -84,129 +85,46 @@ class _TabScreenState extends State<TabScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (ctx) => PostProvider(),
-          ),
-          ChangeNotifierProvider(
-            create: (ctx) => UserProvider(),
-          ),
-          ChangeNotifierProvider(
-            create: (ctx) => PlacenameProvider(),
-          ),
-        ],
-        child: MaterialApp(
-            title: 'VN',
-            theme: ThemeData(),
-            home: Scaffold(
-              backgroundColor: Colors.grey.shade200,
-              appBar: AppBar(
-                elevation: 0,
-                titleTextStyle: const TextStyle(color: Colors.black),
-                backgroundColor: _backgroundColorAppbar,
-                title: Row(
-                  children: [
-                    if (_selectedTab == 0) ...[
-                      Container(
-                          padding: const EdgeInsets.only(left: 15),
-                          child: Image.asset(
-                            'assets/images/logo_full.png',
-                            height: 15.0,
-                            fit: BoxFit.cover,
-                          )),
-                      Expanded(
-                          child: Container(
-                              padding: const EdgeInsets.only(right: 15),
-                              alignment: Alignment.centerRight,
-                              child: IconButtonBuilder(
-                                  onPressed: () => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Search()),
-                                      ),
-                                  icon: Icon(Icons.search))))
-                    ] else if (_selectedTab == 1) ...[
-                      // Container(
-                      //   child: TextFormBuilder(
-                      //       hintText: "Search",
-                      //       prefixIcon: Icons.search_outlined,
-                      //       suffixIcon: Icons.near_me),
-                      // )
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.search,
-                            color: Colors.black,
-                          ))
-                    ] else if (_selectedTab == 2)
-                      ...[]
-                    else if (_selectedTab == 3)
-                      ...[],
-                  ],
-                ),
-                actions: [
-                  _selectedTab == 3
-                      ? Center(
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 25.0),
-                            child: GestureDetector(
-                              onTap: () {
-                                // firebaseAuth.signOut();
-                                // Navigator.of(context).push(
-                                //     CupertinoPageRoute(builder: (_) => Register()));
-                              },
-                              child: Text(
-                                'Logout',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w900,
-                                    fontSize: 15.0,
-                                    color: Colors.black),
-                              ),
-                            ),
-                          ),
-                        )
-                      : Text("")
-                ],
-              ),
-              body: Center(
-                child: tabs.elementAt(_selectedTab)['page'],
-              ),
-              bottomNavigationBar: AnimatedBottomNavigationBar(
-                elevation: 0,
-                icons: tabIcons,
-                activeIndex: _selectedTab,
-                gapLocation: GapLocation.center,
-                notchSmoothness: NotchSmoothness.softEdge,
-                splashColor: Colors.blue.shade800,
-                activeColor: Colors.blue.shade800,
-                inactiveColor: Colors.grey.shade600,
-                iconSize: 25,
-                onTap: (index) => setState(
-                  () => _onItemTapped(index),
-                  //other params
-                ),
-              ),
-              floatingActionButton: FloatingActionButton(
-                elevation: 1,
-                splashColor: Colors.blue,
-                backgroundColor: Colors.white,
-                child: ShaderMask(
-                  shaderCallback: (Rect bounds) {
-                    return RadialGradient(
-                      center: Alignment.topLeft,
-                      radius: 1.0,
-                      colors: _mainColor(),
-                      tileMode: TileMode.mirror,
-                    ).createShader(bounds);
-                  },
-                  child: const Icon(Icons.add),
-                ),
-                onPressed: () {},
-              ),
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.centerDocked,
-              // floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-            )));
+    return Scaffold(
+      backgroundColor: Colors.grey.shade200,
+
+      body: Center(
+        child: tabs.elementAt(_selectedTab)['page'],
+      ),
+      bottomNavigationBar: AnimatedBottomNavigationBar(
+        elevation: 0,
+        icons: tabIcons,
+        activeIndex: _selectedTab,
+        gapLocation: GapLocation.center,
+        notchSmoothness: NotchSmoothness.softEdge,
+        splashColor: Colors.blue.shade800,
+        activeColor: Colors.blue.shade800,
+        inactiveColor: Colors.grey.shade600,
+        iconSize: 25,
+        onTap: (index) => setState(
+          () => _onItemTapped(index),
+          //other params
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        elevation: 1,
+        splashColor: Colors.blue,
+        backgroundColor: Colors.white,
+        child: ShaderMask(
+          shaderCallback: (Rect bounds) {
+            return RadialGradient(
+              center: Alignment.topLeft,
+              radius: 1.0,
+              colors: _mainColor(),
+              tileMode: TileMode.mirror,
+            ).createShader(bounds);
+          },
+          child: const Icon(Icons.add),
+        ),
+        onPressed: () => Navigator.pushNamed(context, '/creter_post'),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+    );
   }
 }

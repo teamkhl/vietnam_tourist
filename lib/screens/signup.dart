@@ -93,7 +93,6 @@ class _SignupState extends State<Signup> {
                           ),
                           SizedBox(height: 10.0),
                           ButtonBuilder(
-                            width: 100,
                             text: "SIGN UP",
                             onPressed: () {
                               BlocProvider.of<AuthcubitCubit>(context)
