@@ -1,6 +1,23 @@
 import 'package:flutter/material.dart';
+<<<<<<< Updated upstream
 import 'dart:async';
 import 'dart:collection';
+=======
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import 'package:vietnam_tourist/providers/placename_picture_provider.dart';
+import 'package:vietnam_tourist/providers/placename_provider.dart';
+import 'package:vietnam_tourist/providers/post_image_provider.dart';
+import 'package:vietnam_tourist/providers/post_provider.dart';
+import 'package:vietnam_tourist/providers/user_provider.dart';
+import 'package:vietnam_tourist/route_generator.dart';
+import '/screens/landing.dart';
+import '/screens/main_screen.dart';
+import '/screens/post_detail.dart';
+import 'providers/post_comment.dart';
+import 'screens/search.dart';
+import 'services/auth.dart';
+>>>>>>> Stashed changes
 
 void main() {
   runApp(const MyApp());
@@ -26,6 +43,11 @@ class MyApp extends StatelessWidget {
             'Hãy luôn nhớ ghi chú cho từng dòng lệnh nhé ! Cố lên',
           ),
         ),
+<<<<<<< Updated upstream
+=======
+        initialRoute: '/x',
+        onGenerateRoute: RouteGenerator.generateRoute,
+>>>>>>> Stashed changes
       ),
     );
   }
