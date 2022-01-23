@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 void main() {
   runApp(const MyApp());
 }
 
 // Hãy luôn nhớ ghi chú cho từng dòng lệnh nhé !
+//Ham main
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
