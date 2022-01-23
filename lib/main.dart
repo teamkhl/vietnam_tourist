@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         ),
         body: Center(
           child: Text(
-            'Hãy luôn nhớ ghi chú cho từng dòng lệnh nhé ! Cố lên',
+            'Hãy luôn nhớ ghi chú cho từng dòng lệnh nhé ! Cố lêfvn',
           ),
         ),
 <<<<<<< Updated upstream
