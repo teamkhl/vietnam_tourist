@@ -13,12 +13,16 @@ import '/screens/post_detail.dart';
 import 'providers/post_comment.dart';
 import 'screens/search.dart';
 import 'services/auth.dart';
+=======
+import 'dart:async';
+import 'dart:convert';
 
 void main() {
   runApp(MyApp());
 }
 
 // Hãy luôn nhớ ghi chú cho từng dòng lệnh nhé !
+//Ham main
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
   final AuthcubitCubit _authcubitCubit = AuthcubitCubit();
