@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:vietnam_tourist/providers/placename_picture_provider.dart';
@@ -15,7 +16,9 @@ import 'screens/search.dart';
 import 'services/auth.dart';
 =======
 import 'dart:async';
+import 'dart:collection';
 import 'dart:convert';
+>>>>>>> origin/Edit_placename_comment_function
 
 void main() {
   runApp(MyApp());
