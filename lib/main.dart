@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        initialRoute: '/c',
+        initialRoute: '/',
         onGenerateRoute: RouteGenerator.generateRoute,
       ),
     );
