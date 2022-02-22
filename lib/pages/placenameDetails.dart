@@ -58,7 +58,7 @@ Container bottomInfo()
     ,Container( padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
     child: Row(children:[Icon(Icons.location_on,size: 16,color: Colors.grey,),
     Text(widget.latitude+"°N ",style: TextStyle(color: Colors.grey,fontSize: 13)),
-    Text(widget.longitude +"°E",style: TextStyle(color: Colors.grey,fontSize: 13))],),
+    Text(widget.longitude +" °E",style: TextStyle(color: Colors.grey,fontSize: 13))],),
      
     ) 
     
