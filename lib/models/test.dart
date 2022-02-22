@@ -1,2 +1,0 @@
-hoanghai
-oko kok
